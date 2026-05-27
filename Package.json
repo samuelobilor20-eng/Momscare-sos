@@ -1,0 +1,5 @@
+{
+  "name": "momscare-sos",
+  "scripts": { "start": "node server.js" },
+  "dependencies": { "express": "*", "twilio": "*", "cors": "*" }
+}
