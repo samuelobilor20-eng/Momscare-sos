@@ -10,7 +10,6 @@ const twilioClient = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
 const FROM = process.env.TWILIO_FROM;
 const ANTHROPIC_KEY = process.env.ANTHROPIC_KEY;
 
-// ── SOS endpoint ─────────────────────────────────────────────────────────────
 app.post('/sos', async (req, res) => {
   const { name, phone, partnerPhone } = req.body;
   const message = `🚨 SOS from momsCare: ${name} has pressed the emergency button. Please check on her immediately.`;
@@ -25,7 +24,6 @@ app.post('/sos', async (req, res) => {
   }
 });
 
-// ── AI Chat endpoint ──────────────────────────────────────────────────────────
 app.post('/chat', async (req, res) => {
   const { system, messages } = req.body;
   try {
@@ -37,7 +35,7 @@ app.post('/chat', async (req, res) => {
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
+        model: 'claude-haiku-4-5',
         max_tokens: 1000,
         system,
         messages
@@ -50,5 +48,7 @@ app.post('/chat', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+app.get('/', (req, res) => res.json({ status: 'momsCare server running' }));
 
 app.listen(process.env.PORT || 3000, () => console.log('momsCare server running'));
